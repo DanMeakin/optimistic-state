@@ -5,10 +5,10 @@ const REVERT_OPTIMISTIC_CHANGE = 'REVERT_OPTIMISTIC_CHANGE';
 
 const addNote = note => ({
   type: ADD_NOTE,
-  payload: note,
+  payload: { ...note },
   meta: {
     optimistic: {
-      command: [ADD_NOTE, note],
+      command: [ADD_NOTE, { ...note }],
       // We cannot reduce a new note into another action.
       reducer: () => null
     }
@@ -17,10 +17,10 @@ const addNote = note => ({
 
 const updateNote = note => ({
   type: UPDATE_NOTE,
-  payload: note,
+  payload: { ...note },
   meta: {
     optimistic: {
-      command: [UPDATE_NOTE, note],
+      command: [UPDATE_NOTE, { ...note }],
       reducer: otherAction => {
         const { payload: otherNote } = otherAction;
         if (otherNote.id === note.id) {
